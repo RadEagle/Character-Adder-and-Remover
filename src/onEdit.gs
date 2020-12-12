@@ -1,13 +1,10 @@
 function onEdit(){
   
-  var ss = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-  var ms = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Main");
-  var rs = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Rejected");
-  var cs = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Control Panel");
-  
+  // obtain active cell information
   var active_cell = ss.getActiveCell();
   var active_row = active_cell.getRow();
 
+  // under the specified command, check if character is present
   if(active_cell.getColumn() == 1 && ss.getSheetName() == "Control Panel" && active_cell.getValue() != "")
   {
     var character = active_cell.getValue();
