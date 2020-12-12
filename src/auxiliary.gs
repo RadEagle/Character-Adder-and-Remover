@@ -1,8 +1,5 @@
 function checkCharacter(character, data, withReasoning) {
   
-  var ss = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-  var cs = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Control Panel");
-  
   var active_cell = ss.getActiveCell();
   var lr = data.getLastRow();
   var found = 0
@@ -45,13 +42,13 @@ function checkCharacter(character, data, withReasoning) {
   active_cell.offset(1, 0).setValue(found + " found on the list.");
   
   // if rejecting or changing reasons, give a list of possible reasons
-  var startRowReasons = 3;
-  var colIndexReasons = getReasonsColIndex();
-  var colLastRow = getReasonsLastRow();
-  var activeRow = active_cell.getRowIndex();
-  
   if(withReasoning)
   {
+    var startRowReasons = 3;
+    var colIndexReasons = getReasonsColIndex();
+    var colLastRow = getReasonsLastRow();
+    var activeRow = active_cell.getRowIndex();
+    
     var validationRange = cs.getRange(startRowReasons, colIndexReasons, colLastRow - startRowReasons + 1);
     var validationRule = SpreadsheetApp.newDataValidation().requireValueInRange(validationRange).build();
     active_cell.offset(0, 2).setDataValidation(validationRule);
