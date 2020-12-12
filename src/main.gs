@@ -1,9 +1,5 @@
 function addCharacter(character, series) {
   
-  var ms = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Main");
-  var rs = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Rejected");
-  var cs = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Control Panel");
-  
   // grab the contents of the cell and copy them to the main list
   var lr = rs.getLastRow();
   var lc = rs.getLastColumn();
@@ -32,10 +28,6 @@ function addCharacter(character, series) {
 }
 
 function removeCharacter(character, series, reason) {
-  
-  var ms = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Main");
-  var rs = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Rejected");
-  var cs = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Control Panel");
   
   // grab the contents of the cell and copy them to the rejected list
   var lr = ms.getLastRow();
@@ -66,13 +58,12 @@ function removeCharacter(character, series, reason) {
 
 function createCharacter(character, genre, series) {
   
-  var rs = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Rejected");
-  var cs = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Control Panel");
-  
+  // get cell contents
   var lr = rs.getLastRow() + 1;
   var pending = cs.getRange(2, 7);
-  
   var insert_cell = rs.getRange(lr, 2);
+  
+  // insert cell to the secondary list
   insert_cell.setValue(character);
   insert_cell.offset(0, 2).setValue(genre);
   insert_cell.offset(0, 3).setValue(series);
@@ -81,9 +72,6 @@ function createCharacter(character, genre, series) {
 }
 
 function changeReason(character, series, reason) {
-  
-  var rs = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Rejected");
-  var cs = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Control Panel");
   
   // grab the contents of the cell
   var lr = rs.getLastRow();
