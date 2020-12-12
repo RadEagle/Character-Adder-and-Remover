@@ -79,3 +79,26 @@ function createCharacter(character, genre, series) {
   pending.copyTo(rs.getRange(lr, 6));
   
 }
+
+function changeReason(character, series, reason) {
+  
+  var rs = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Rejected");
+  var cs = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Control Panel");
+  
+  // grab the contents of the cell
+  var lr = rs.getLastRow();
+  var char_list = rs.getRange(2, 2, lr - 1).getValues();
+  var sel_row = 0;
+  
+  // find the character
+  for(i = 0; i < char_list.length; i++)
+    if(character == char_list[i][0] && series == rs.getRange(i + 2, 5).getValue())
+    {
+      sel_row = i + 2
+      break;
+    }
+  
+  // change the reasoning
+  cs.getRange(reason, 7).copyTo(rs.getRange(sel_row, 6));
+  
+}
