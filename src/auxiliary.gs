@@ -1,4 +1,4 @@
-function checkCharacter(character, data) {
+function checkCharacter(character, data, withReasoning) {
   
   var ss = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
   var cs = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Control Panel");
@@ -44,23 +44,19 @@ function checkCharacter(character, data) {
   // log how many were found in the list
   active_cell.offset(1, 0).setValue(found + " found on the list.");
   
-  // if rejecting a character, give a list of possible reasons
+  // if rejecting or changing reasons, give a list of possible reasons
   var startRowReasons = 3;
+  var colIndexReasons = getReasonsColIndex();
   var colLastRow = getReasonsLastRow();
+  var activeRow = active_cell.getRowIndex();
   
-  if(data.getName() == "Main")
+  if(withReasoning)
   {
     var validationRange = cs.getRange(startRowReasons, colIndexReasons, colLastRow - startRowReasons + 1);
     var validationRule = SpreadsheetApp.newDataValidation().requireValueInRange(validationRange).build();
     active_cell.offset(0, 2).setDataValidation(validationRule);
   }
   
-}
-
-function autoSort(ss)
-{
-  ss.sort(20, false);
-  ss.sort(24, false);
 }
 
 function getLastRowofColumn(ss, col)
@@ -79,8 +75,13 @@ function getLastRowofColumn(ss, col)
 function getReasonsLastRow()
 {
   var cs = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Control Panel");
+  return getLastRowofColumn(cs, getReasonsColIndex());
+}
+
+function getReasonsColIndex()
+{
+  var cs = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Control Panel");
   
   var firstRowContents = cs.getRange(1, 1, 1, cs.getLastColumn()).getValues();
-  var colIndexReasons = firstRowContents[0].indexOf("Reasons") + 1;
-  return getLastRowofColumn(cs, colIndexReasons);
+  return firstRowContents[0].indexOf("Reasons") + 1;
 }
