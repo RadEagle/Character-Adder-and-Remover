@@ -6,9 +6,6 @@ function autoSort(ss)
 
 function sortLists()
 {
-  var ms = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Main");
-  var rs = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Rejected");
-  
   autoSort(ms);
   autoSort(rs);
 }
